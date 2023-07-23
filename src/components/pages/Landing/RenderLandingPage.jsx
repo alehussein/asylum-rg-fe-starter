@@ -7,6 +7,8 @@ import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
 import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
 import { useHistory } from 'react-router-dom';
+import BottomSection from '../../New/BottomSection.jsx';
+import TopSection from '../../New/TopSection';
 // for the purposes of testing PageNav
 // import PageNav from '../../common/PageNav';
 
@@ -32,7 +34,9 @@ function RenderLandingPage(props) {
       </div>
 
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
-      {/* <div className="graphs-section"> */}
+
+      <TopSection className="graphs-section" />
+
       <div className="view-more-data-btn-container">
         <Button
           type="default"
@@ -40,6 +44,9 @@ function RenderLandingPage(props) {
           onClick={() => history.push('/graphs')}
         >
           View the Data
+        </Button>
+        <Button style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}>
+          Download the Data
         </Button>
       </div>
 
@@ -61,7 +68,15 @@ function RenderLandingPage(props) {
       </div>
       <div>
         {/* Bottom Section: Add code here for the graphs section for your first ticket */}
-        {/* <div className="bottom-section">*/}
+        <BottomSection />
+        <div className="bottom-section">
+          <Button
+            type="default"
+            style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+          >
+            Read More
+          </Button>
+        </div>
         <p onClick={() => scrollToTop()} className="back-to-top">
           Back To Top ^
         </p>

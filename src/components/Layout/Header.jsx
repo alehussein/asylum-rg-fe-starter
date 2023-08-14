@@ -3,10 +3,38 @@ import { Image } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../styles/Images/WhiteLogo.png';
 import { colors } from '../../styles/data_vis_colors';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const { primary_accent_color } = colors;
 
 function HeaderContent() {
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { user } = useAuth0();
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: '/profile',
+      },
+    });
+  };
+
+  const handleSignUp = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: '/profile',
+      },
+    });
+  };
+
+  const handleLogout = () => {
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+  };
+
   return (
     <div
       style={{
@@ -25,9 +53,44 @@ function HeaderContent() {
         <Link to="/" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
           Home
         </Link>
-        <Link to="/graphs" style={{ color: '#E2F0F7' }}>
+        <Link to="/graphs" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
           Graphs
         </Link>
+        {!isAuthenticated && (
+          <>
+            <Link
+              to="/profile"
+              style={{ color: '#E2F0F7', paddingRight: '75px' }}
+              onClick={handleLogin}
+            >
+              {' '}
+              Login
+            </Link>
+            <Link
+              to="/profile"
+              style={{ color: '#E2F0F7' }}
+              onClick={handleSignUp}
+            >
+              {' '}
+              Singup{' '}
+            </Link>{' '}
+          </>
+        )}
+
+        {isAuthenticated && (
+          <>
+            <Link
+              to="/"
+              style={{ color: '#E2F0F7', paddingRight: '75px' }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Link>
+            <Link to="/profile" style={{ color: '#E2F0F7' }}>
+              {user?.name}
+            </Link>{' '}
+          </>
+        )}
       </div>
     </div>
   );
